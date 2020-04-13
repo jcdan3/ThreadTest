@@ -6,6 +6,7 @@ class ThreadTester
 {
 public:
 	std::mutex testMutex;
+	std::string goAhead2();
 	void goAhead();
 	static void printLockedByThread(bool locked);
 
