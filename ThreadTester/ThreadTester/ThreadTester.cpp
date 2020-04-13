@@ -48,7 +48,7 @@ void ThreadTester::doSomeCalculation()
     end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = end - start;
 
-    std::cout << "Calculation time: " << elapsed_seconds.count() << " seconds"<< std::endl;
+    std::cout << "Calculation time: " << elapsed_seconds.count() << " seconds for thread "<< std::this_thread::get_id() << std::endl;
 }
 
 int main()
@@ -58,7 +58,13 @@ int main()
     std::shared_ptr<ThreadTester> tester2 = tester;
 
     std::thread firsthread(&ThreadTester::goAhead,tester);
-    std::thread secondthread(&ThreadTester::goAhead, tester2);;
+    std::thread secondthread(&ThreadTester::goAhead, tester2);
+
+    firsthread.join();
+    std::cout << "First Thread is over (thread as joined in main)" << std::endl;
+
+    secondthread.join();
+    std::cout << "Second Thread is over (thread as joined in main)" << std::endl;
 
     int x;
     std::cin >> x;
